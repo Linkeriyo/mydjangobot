@@ -40,6 +40,6 @@ def generate_embed(message: Message, debts: QuerySet):
     if owe or owed:
         embed.set_footer(text=f"Pagad {plural(random.choice(INSULTS)).lower()}", icon_url="https://cdn.discordapp.com/emojis/815528166721585163.webp?size=60")
     else:
-        embed.description("No tienes deudas máquina.")
+        embed.description = "No tienes deudas máquina."
 
     return embed
