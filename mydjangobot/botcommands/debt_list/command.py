@@ -3,13 +3,13 @@ import mydjangobot.discordbot_settings as settings
 from asgiref.sync import sync_to_async
 from discord import Embed, Message
 from django.db.models.query import QuerySet
-from mydjangobot.data_functions import get_unpaid_debts_for_user
+from mydjangobot.data_functions import get_unpaid_debts_for_user, update_and_get_discord_user
 from mydjangobot.funny_data import INSULTS, plural
 
 
 async def run(message, params):
     clean_message = message.content[len(settings.prefix):]
-
+    await update_and_get_discord_user(message.author)
     debts = await sync_to_async(get_unpaid_debts_for_user)(message.author)
     embed = await sync_to_async(generate_embed)(message, debts)
     await message.reply(embed=embed)
