@@ -20,6 +20,8 @@ def generate_embed(message: Message, debts: QuerySet):
     
     you_owe_string = ""
     you_are_owed_string = ""
+    owe = False
+    owed = False
 
     for d in debts.order_by('debtor'):
         if d.debtor.discord_id == message.author.id:
