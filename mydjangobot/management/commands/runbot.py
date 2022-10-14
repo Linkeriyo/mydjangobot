@@ -4,6 +4,7 @@ from mydjangobot.botcommands.ping import command as pingcommand
 from mydjangobot.botcommands.fakedelete import command as fakedeletecommand
 from mydjangobot.botcommands.debt_add import command as adddebtcommand
 from mydjangobot.botcommands.debt_pay import command as paydebtcommand
+from mydjangobot.botcommands.debt_list import command as listdebtcommand
 import mydjangobot.discordbot_settings as settings
 
 intents = discord.Intents.default()
@@ -42,6 +43,8 @@ async def on_message(message):
             await adddebtcommand.run(message, words[1:])
         elif words[1] == "pay":
             await paydebtcommand.run(message, words[1:])
+        elif words[1] == "list":
+            await listdebtcommand.run(message, words[1:])
     else:
         await message.reply('que dices')
 

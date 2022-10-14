@@ -222,3 +222,13 @@ INSULTS = [
     'Zullenco',
     'Zurcefrenillos'
 ]
+
+VOWELS = ('a', 'e', 'i', 'o', 'u')
+
+def plural(string: str):
+    if string.endswith('s'):
+        return string
+    elif string.endswith(VOWELS):
+        return string + 's'
+    else:
+        return string + 'es'
