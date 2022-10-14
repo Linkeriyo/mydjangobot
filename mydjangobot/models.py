@@ -15,8 +15,8 @@ class Debt(models.Model):
     amount = models.DecimalField(max_digits=16, decimal_places=2)
     currency = models.CharField(max_length=32)
     start_date = models.DateField()
-    due_date = models.DateField(null=True)
-    paid_date = models.DateField(null=True)
+    due_date = models.DateField(null=True, blank=True)
+    paid_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.indebted.username} le debe {self.amount} {self.currency} a {self.debtor.username}"
