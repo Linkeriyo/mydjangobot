@@ -27,7 +27,17 @@ def generate_embed(message: Message, debts: QuerySet):
         else:
             you_owe_string += f"Debt {d.id}: {d}\n"
 
-    embed.add_field(name="Te deben:", value=you_are_owed_string, inline=False)
-    embed.add_field(name="Debes:", value=you_owe_string, inline=False)
-    embed.set_footer(text=f"Pagad {plural(random.choice(INSULTS)).lower()}", icon_url="https://cdn.discordapp.com/emojis/815528166721585163.webp?size=60")
+    if you_are_owed_string != "":
+        embed.add_field(name="Te deben:", value=you_are_owed_string, inline=False)
+        owed = True
+    
+    if you_owe_string != "":
+        embed.add_field(name="Debes:", value=you_owe_string, inline=False)
+        owe = True
+    
+    if owe or owed:
+        embed.set_footer(text=f"Pagad {plural(random.choice(INSULTS)).lower()}", icon_url="https://cdn.discordapp.com/emojis/815528166721585163.webp?size=60")
+    else:
+        embed.description("No tienes deudas máquina.")
+
     return embed
