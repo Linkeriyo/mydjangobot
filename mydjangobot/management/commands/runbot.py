@@ -45,6 +45,8 @@ async def on_message(message):
             await paydebtcommand.run(message, words[1:])
         elif words[1] == "list":
             await listdebtcommand.run(message, words[1:])
+        else:
+            await message.reply("Argumentos posibles: add, pay, list")
     else:
         await message.reply('que dices')
 

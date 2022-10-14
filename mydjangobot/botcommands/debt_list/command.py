@@ -9,7 +9,7 @@ from mydjangobot.funny_data import INSULTS, plural
 
 async def run(message, params):
     clean_message = message.content[len(settings.prefix):]
-    await update_and_get_discord_user(message.author)
+    await sync_to_async(update_and_get_discord_user)(message.author)
     debts = await sync_to_async(get_unpaid_debts_for_user)(message.author)
     embed = await sync_to_async(generate_embed)(message, debts)
     await message.reply(embed=embed)
