@@ -41,13 +41,16 @@ async def on_message(message):
     elif words[0] == ";DELETE":
         await fakedeletecommand.run(message, words[1:])
     elif words[0] == "debt":
-        if words[1] == "add":
-            await adddebtcommand.run(message, words[1:])
-        elif words[1] == "pay":
-            await paydebtcommand.run(message, words[1:])
-        elif words[1] == "list":
-            await listdebtcommand.run(message, words[1:])
-        else:
+        try:
+            if words[1] == "add":
+                await adddebtcommand.run(message, words[1:])
+            elif words[1] == "pay":
+                await paydebtcommand.run(message, words[1:])
+            elif words[1] == "list":
+                await listdebtcommand.run(message, words[1:])
+            else:
+                await message.reply("Argumentos posibles: add, pay, list")
+        except:
             await message.reply("Argumentos posibles: add, pay, list")
     elif words[0] == "insult":
         await message.reply(random.choice(INSULTS))
