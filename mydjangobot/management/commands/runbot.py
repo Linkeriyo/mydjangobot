@@ -8,6 +8,7 @@ from mydjangobot.botcommands.debt_pay import command as paydebtcommand
 from mydjangobot.botcommands.debt_list import command as listdebtcommand
 import mydjangobot.discordbot_settings as settings
 from mydjangobot.funny_data import INSULTS
+from mydjangobot import slash_commands
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -15,15 +16,18 @@ intents.message_content = True
 activity = discord.Activity(type=discord.ActivityType.listening, name='tests')
 client = discord.Client(intents=intents, activity=activity)
 
+
 @client.event
 async def on_ready():
+    await slash_commands.initialize_commands(client)
     print("discord client ready")
+
 
 @client.event
 async def on_message(message):
     if message.author.bot:
         return
-        
+
     if not message.content.startswith(settings.prefix):
         return
 
@@ -32,7 +36,7 @@ async def on_message(message):
     words = content.split(" ")
 
     if len(words) == 0:
-        return  
+        return
 
     if words[0] == "wake":
         await wakecommand.run(message, words[1:])

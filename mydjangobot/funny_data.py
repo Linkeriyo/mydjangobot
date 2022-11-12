@@ -225,7 +225,7 @@ INSULTS = [
 
 VOWELS = ('a', 'e', 'i', 'o', 'u')
 
-def plural(string: str):
+def get_plural(string: str):
     if string.endswith('s'):
         return string
     elif string.endswith(VOWELS):
