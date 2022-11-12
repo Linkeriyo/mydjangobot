@@ -7,7 +7,7 @@ from mydjangobot.botcommands.debt_pay import command as debt_pay_command
 
 async def initialize_commands(client: Client):
     debt_group = app_commands.Group(
-        name="debt", description="pay your debts", guild_ids=[580421667336224769, 668539151037235202])
+        name="debt", description="pay your debts", guild_only=True, guild_ids=[580421667336224769, 668539151037235202])
 
     await define_commands(debt_group)
 
