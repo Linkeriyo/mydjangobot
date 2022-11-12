@@ -1,14 +1,13 @@
 import random
+
 import discord
-from mydjangobot.botcommands.wake import command as wakecommand
-from mydjangobot.botcommands.ping import command as pingcommand
-from mydjangobot.botcommands.fakedelete import command as fakedeletecommand
-from mydjangobot.botcommands.debt_add import command as adddebtcommand
-from mydjangobot.botcommands.debt_pay import command as paydebtcommand
-from mydjangobot.botcommands.debt_list import command as listdebtcommand
+
 import mydjangobot.discordbot_settings as settings
-from mydjangobot.funny_data import INSULTS
 from mydjangobot import slash_commands
+from mydjangobot.botcommands.fakedelete import command as fakedeletecommand
+from mydjangobot.botcommands.ping import command as pingcommand
+from mydjangobot.botcommands.wake import command as wakecommand
+from mydjangobot.funny_data import INSULTS
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -44,18 +43,6 @@ async def on_message(message):
         await pingcommand.run(message, words[1:])
     elif words[0] == ";DELETE":
         await fakedeletecommand.run(message, words[1:])
-    elif words[0] == "debt":
-        try:
-            if words[1] == "add":
-                await adddebtcommand.run(message, words[1:])
-            elif words[1] == "pay":
-                await paydebtcommand.run(message, words[1:])
-            elif words[1] == "list":
-                await listdebtcommand.run(message, words[1:])
-            else:
-                await message.reply("Argumentos posibles: add, pay, list")
-        except:
-            await message.reply("Argumentos posibles: add, pay, list")
     elif words[0] == "insult":
         await message.reply(random.choice(INSULTS))
     else:

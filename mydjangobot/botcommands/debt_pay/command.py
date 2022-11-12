@@ -1,7 +1,7 @@
 import discord
-import mydjangobot.discordbot_settings as settings
 from asgiref.sync import sync_to_async
 from django.db.models.query import QuerySet
+
 from mydjangobot import data_functions
 
 
@@ -13,18 +13,15 @@ class DebtSelectItem(discord.ui.Select):
         else:
             response = "Ha ocurrido un problema."
 
-        await interaction.response.send_message(response)
-        await interaction.message.delete()
+        await interaction.response.edit_message(content=response, view=None)
 
 
-async def run(message, params):
-    clean_message = message.content[len(settings.prefix):]
-
-    debts = await sync_to_async(data_functions.get_unpaid_debts_for_user)(message.author)
+async def run(interaction: discord.Interaction):
+    debts = await sync_to_async(data_functions.get_unpaid_debts_for_user)(interaction.user)
     options = await sync_to_async(get_select_options_from_debts_queryset)(debts)
 
     if len(options) == 0:
-        await message.reply("No tienes deudas.")
+        await interaction.response.send_message("No tienes deudas.")
         return
 
     select_menu = DebtSelectItem(
@@ -37,8 +34,7 @@ async def run(message, params):
     view = discord.ui.View()
     view.add_item(select_menu)
 
-    sent_message = await message.reply("Selecciona una deuda:")
-    await sent_message.edit(view=view)
+    await interaction.response.send_message(view=view, ephemeral=True)
 
 
 def get_select_options_from_debts_queryset(debts: QuerySet):

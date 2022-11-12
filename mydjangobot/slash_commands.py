@@ -2,6 +2,7 @@ from discord import Client, Interaction, User, app_commands
 
 from mydjangobot.botcommands.debt_add import command as debt_add_command
 from mydjangobot.botcommands.debt_list import command as debt_list_command
+from mydjangobot.botcommands.debt_pay import command as debt_pay_command
 
 
 async def initialize_commands(client: Client):
@@ -19,6 +20,7 @@ async def initialize_commands(client: Client):
 async def define_commands(debt_group):
     await define_debt_add_command(debt_group)
     await define_debt_list_command(debt_group)
+    await define_debt_pay_command(debt_group)
 
 
 async def define_debt_list_command(debt_group: app_commands.Group):
@@ -32,3 +34,9 @@ async def define_debt_add_command(debt_group: app_commands.Group):
     @app_commands.describe(indebted="the indebted user", debtor="the debtor user", amount="the debted amount", currency="the currency of the debt")
     async def debt_add(interaction: Interaction, indebted: User, debtor: User, amount: float, currency: str):
         await debt_add_command.run(interaction, indebted, debtor, amount, currency)
+
+
+async def define_debt_pay_command(debt_group: app_commands.Group):
+    @debt_group.command(name="pay", description="set one debt as paid")
+    async def debt_pay(interaction: Interaction):
+        await debt_pay_command.run(interaction)
