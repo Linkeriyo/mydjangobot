@@ -18,7 +18,6 @@ client = discord.Client(intents=intents, activity=activity)
 
 @client.event
 async def on_ready():
-    await slash_commands.initialize_commands(client)
     print("discord client ready")
 
 
@@ -45,6 +44,8 @@ async def on_message(message):
         await fakedeletecommand.run(message, words[1:])
     elif words[0] == "insult":
         await message.reply(random.choice(INSULTS))
+    elif words[0] == "sync" and message.author.id == 154268434090164226:
+        await slash_commands.initialize_commands(client)
     else:
         await message.reply('que dices')
 

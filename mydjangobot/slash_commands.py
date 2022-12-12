@@ -1,3 +1,4 @@
+from datetime import date
 from discord import Client, Interaction, User, app_commands
 
 from mydjangobot.botcommands.debt_add import command as debt_add_command
@@ -7,14 +8,15 @@ from mydjangobot.botcommands.debt_pay import command as debt_pay_command
 
 async def initialize_commands(client: Client):
     debt_group = app_commands.Group(
-        name="debt", description="pay your debts", guild_only=True, guild_ids=[580421667336224769, 668539151037235202])
+        name="debt", description="pay your debts", guild_only=True)
 
     await define_commands(debt_group)
 
     command_tree = app_commands.CommandTree(client)
     command_tree.add_command(debt_group)
 
-    await command_tree.sync()
+    commands_synced = await command_tree.sync()
+    print(f"{len(commands_synced)} commands synced globally.")
 
 
 async def define_commands(debt_group):
@@ -32,8 +34,8 @@ async def define_debt_list_command(debt_group: app_commands.Group):
 async def define_debt_add_command(debt_group: app_commands.Group):
     @debt_group.command(name="add", description="add a debt")
     @app_commands.describe(indebted="the indebted user", debtor="the debtor user", amount="the debted amount", currency="the currency of the debt")
-    async def debt_add(interaction: Interaction, indebted: User, debtor: User, amount: float, currency: str):
-        await debt_add_command.run(interaction, indebted, debtor, amount, currency)
+    async def debt_add(interaction: Interaction, indebted: User, debtor: User, amount: float, currency: str, due_date: str = None):
+        await debt_add_command.run(interaction, indebted, debtor, amount, currency, due_date)
 
 
 async def define_debt_pay_command(debt_group: app_commands.Group):

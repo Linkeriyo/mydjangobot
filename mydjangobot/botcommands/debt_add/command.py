@@ -9,18 +9,22 @@ from mydjangobot.funny_data import INSULTS
 from mydjangobot.models import Debt
 
 
-async def run(interaction: Interaction, indebted: User, debtor: User, amount: float, currency: str):
+async def run(interaction: Interaction, indebted: User, debtor: User, amount: float, currency: str, due_date: str):
+    try:
+        debtor_django = await sync_to_async(update_and_get_discord_user)(debtor)
+        indebted_django = await sync_to_async(update_and_get_discord_user)(indebted)
 
-    debtor_django = await sync_to_async(update_and_get_discord_user)(debtor)
-    indebted_django = await sync_to_async(update_and_get_discord_user)(indebted)
+        debt = Debt(
+            debtor=debtor_django,
+            indebted=indebted_django,
+            amount=amount,
+            currency=currency,
+            start_date=date.today(),
+            due_date=due_date
+        )
 
-    debt = Debt(
-        debtor=debtor_django,
-        indebted=indebted_django,
-        amount=amount,
-        currency=currency,
-        start_date=date.today()
-    )
-
-    await sync_to_async(debt.save, thread_sensitive=True)()
-    await interaction.response.send_message(f'<@{indebted.id}> paga {random.choice(INSULTS).lower()}, id de la deuda: {debt.id}')
+        await sync_to_async(debt.save, thread_sensitive=True)()
+        await interaction.response.send_message(f'<@{indebted.id}> paga {random.choice(INSULTS).lower()}, id de la deuda: {debt.id}')
+    
+    except Exception as e:
+        await interaction.response.send_message(f'Ha ocurrido un error: {e}')
