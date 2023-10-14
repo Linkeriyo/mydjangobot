@@ -7,6 +7,7 @@ from mydjangobot import slash_commands
 from mydjangobot.botcommands.fakedelete import command as fakedeletecommand
 from mydjangobot.botcommands.ping import command as pingcommand
 from mydjangobot.botcommands.wake import command as wakecommand
+from mydjangobot.botcommands.whereareyou import command as whereareyoucommand
 from mydjangobot.funny_data import INSULTS
 
 intents = discord.Intents.default()
@@ -38,6 +39,8 @@ async def on_message(message):
 
     if words[0] == "wake":
         await wakecommand.run(message, words[1:])
+    elif words[0] == "whereareyou":
+        await whereareyoucommand.run(message, words[1:])
     elif words[0] == "ping":
         await pingcommand.run(message, words[1:])
     elif words[0] == ";DELETE":
