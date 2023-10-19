@@ -13,7 +13,7 @@ from mydjangobot.funny_data import INSULTS
 intents = discord.Intents.default()
 intents.message_content = True
 
-activity = discord.Activity(type=discord.ActivityType.listening, name='tests')
+activity = discord.Activity(type=discord.ActivityType.listening, name='linkeriyo')
 client = discord.Client(intents=intents, activity=activity)
 
 
