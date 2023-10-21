@@ -7,4 +7,4 @@ async def run(message, params):
             return
     
     ip = get('https://api.ipify.org').content.decode('utf8')
-    await message.channel.send(f'IP: {ip}')
+    await message.channel.send(f'IP: ||{ip}||')
