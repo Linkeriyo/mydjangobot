@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mydjangobot'
+    'django_crontab',
+    'mydjangobot',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MICROSOFT_ACCOUNT_CHANNEL_ID = '1168141945739169822'
+
+CRONJOBS = [
+    ('30 1 * * *', 'mydjangobot.cron.scheduled_job')
+]

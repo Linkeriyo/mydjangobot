@@ -4,7 +4,6 @@ import discord
 
 import mydjangobot.discordbot_settings as settings
 from mydjangobot import slash_commands
-from mydjangobot.botcommands.fakedelete import command as fakedeletecommand
 from mydjangobot.botcommands.ping import command as pingcommand
 from mydjangobot.botcommands.wake import command as wakecommand
 from mydjangobot.botcommands.whereareyou import command as whereareyoucommand
@@ -43,10 +42,6 @@ async def on_message(message):
         await whereareyoucommand.run(message, words[1:])
     elif words[0] == "ping":
         await pingcommand.run(message, words[1:])
-    elif words[0] == ";DELETE":
-        await fakedeletecommand.run(message, words[1:])
-    elif words[0] == "insult":
-        await message.reply(random.choice(INSULTS))
     elif words[0] == "sync" and message.author.id == 154268434090164226:
         await slash_commands.initialize_commands(client)
     else:
