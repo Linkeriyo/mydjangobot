@@ -1,8 +1,7 @@
 import random
 
 import discord
-
-import mydjangobot.discordbot_settings as settings
+from mydjangobot import discordbot_settings
 from mydjangobot import slash_commands
 from mydjangobot.botcommands.ping import command as pingcommand
 from mydjangobot.botcommands.wake import command as wakecommand
@@ -19,6 +18,7 @@ client = discord.Client(intents=intents, activity=activity)
 @client.event
 async def on_ready():
     print("discord client ready")
+    await slash_commands.initialize_commands(client)
 
 
 @client.event
@@ -26,10 +26,10 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    if not message.content.startswith(settings.prefix):
+    if not message.content.startswith(discordbot_settings.prefix):
         return
 
-    content = message.content[len(settings.prefix):]
+    content = message.content[len(discordbot_settings.prefix):]
 
     words = content.split(" ")
 
@@ -49,4 +49,4 @@ async def on_message(message):
 
 print("discord client initialized")
 
-client.run(settings.token)
+client.run(discordbot_settings.token)
