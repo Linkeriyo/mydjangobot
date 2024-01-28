@@ -129,5 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MICROSOFT_ACCOUNT_CHANNEL_ID = '1168141945739169822'
 
 CRONJOBS = [
-    ('30 1 * * *', 'mydjangobot.cron.scheduled_job')
+    ('17 21 * * *', 'mydjangobot.cron.scheduled_job')
 ]
