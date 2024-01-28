@@ -1,2 +1,3 @@
 source venv/bin/activate
-screen -dmS mydjangobot python3 manage.py runbot
+pip install -r requirements.txt
+screen -dmS mydjangobot python manage.py runbot
