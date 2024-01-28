@@ -1,6 +1,7 @@
 import discord
 
 from mydjangobot import settings
+from mydjangobot import discordbot_settings
 
 client = discord.Client(intents=discord.Intents.default())
 
@@ -11,4 +12,4 @@ async def on_ready():
     await channel.send('test')
 
 def scheduled_job():
-    client.run(settings.token)
+    client.run(discordbot_settings.token)
