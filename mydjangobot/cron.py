@@ -10,5 +10,5 @@ async def on_ready():
     channel = client.get_channel(settings.MICROSOFT_ACCOUNT_CHANNEL_ID)
     await channel.send('test')
 
-async def scheduled_job():
+def scheduled_job():
     client.run(settings.token)
