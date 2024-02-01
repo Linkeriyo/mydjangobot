@@ -10,13 +10,18 @@ client = discord.Client(intents=discord.Intents.default())
 async def on_ready():
     print("discord client ready")
     channel = client.get_channel(settings.MICROSOFT_ACCOUNT_CHANNEL_ID)
-    await channel.send('@here pagad el gamepass 1.70€, gracias')
+    print(f"sending message to {channel}")
+    await channel.send('@everyone pagad el gamepass 1.70€, gracias')
+    print("discord client closing")
     await client.close()
 
 
 def scheduled_job():
-    if date_check():
-        client.run(discordbot_settings.token)
+    if not date_check():
+        print(f"date check failed, today is {datetime.now()}")
+        return
+    
+    client.run(discordbot_settings.token)
 
 
 def date_check():
